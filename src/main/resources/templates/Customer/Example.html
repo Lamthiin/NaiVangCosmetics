@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="vi">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nai Vang Cosmetic</title>
+    <link rel="icon" type="image/png" th:src="@{/Customer/Example/Image/LogoConNai.png}">
+    <link rel="stylesheet" th:href="@{/Example/Example.css}">
+    <!-- Slick CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Slick JS -->
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+</head>
+<body>
+
+<!-- Banner GIF full màn hình -->
+<div class="promo-banner">
+    <img th:src="@{/Example/Image/Example.gif}" alt="Promotion Nai Vang">
+</div>
+
+<!-- Header -->
+<div class="header">
+    <div class="container header-inner">
+        <a th:href="@{/}">
+            <img th:src="@{/Customer/Example/Image/Logo7.png}" alt="Logo" width="150" height="100">
+        </a>
+
+        <div class="search-bar">
+            <div class="search-wrap">
+                <input type="text" placeholder="Bạn cần tìm ....">
+                <span class="search-icon">
+            <svg viewBox="0 0 24 27" aria-hidden="true">
+              <path d="M10,2C4.5,2,0,6.5,0,12s4.5,10,10,10s10-4.5,10-10S15.5,2,10,2z M10,19c-3.9,0-7-3.1-7-7s3.1-7,7-7s7,3.1,7,7S13.9,19,10,19z"></path>
+              <rect x="17" y="17" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -9.2844 19.5856)" width="4" height="8"></rect>
+            </svg>
+          </span>
+            </div>
+        </div>
+
+        <div class="header-icons">
+            <div class="user-section">
+                <!-- Nút user -->
+                <button class="user-btn" aria-label="Tài khoản">
+                    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor"
+                              d="M17.75 14c1.24 0 2.25 1.01 2.25 2.25v.92c0 .57-.18 1.13-.52 1.6C18 20.9 15.5 22 12 22s-6-1.1-7.48-3.23c-.34-.47-.52-1.03-.52-1.6v-.92C4 15.01 5.01 14 6.25 14h11.5ZM12 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10Z"/>
+                    </svg>
+                </button>
+
+                <!-- Dropdown (ẩn mặc định, hiện khi hover hoặc click) -->
+                <div class="user-dropdown">
+                    <a th:href="@{/login}" id="login-btn">Đăng nhập</a>
+                    <a th:href="@{/sign-up}" id="subcribe-btn">Đăng ký</a>
+                    <a th:href="@{/Information/Information.html}" id="account-info">Thông tin tài khoản</a>
+                    <a href="#" id="logout-btn">Đăng xuất</a>
+                </div>
+            </div>
+
+
+            <!-- Cart Section -->
+            <div class="cart-section">
+                <a href="#" class="cart-pill" title="Giỏ hàng">
+                    <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor"
+                              d="M7 4h-2l-1 2h2l3.6 7.59-1.35 2.44C7.89 16.37 8.29 17 8.94 17h9.56v-2H9.42l1.1-2h7.25c.75 0 1.41-.41 1.75-1.03L22 7H6.42l-.7-1h1.28L7 4Zm-1 16a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm12 0a2 2 0 1 0 .001-3.999A2 2 0 0 0 18 20Z"/>
+                    </svg>
+                    <span>Giỏ hàng</span>
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- Menu -->
+<div class="menu-bar">
+    <div class="container menu-inner">
+
+        <div class="dropdown">
+            <a href="#">☰ DANH MỤC SẢN PHẨM</a>
+            <ul class="dropdown-content">
+                <li class="has-submenu" th:each="cat : ${rootCategories}">
+                    <a th:href="@{/category/{id}/item(id=${cat.categoryId})}">
+                        <img class="menu-icon"
+                             th:src="@{/Customer/Home/{icon}(icon=${cat.slug + '.png'})}"
+                             th:alt="${cat.name}" />
+                        <span th:text="${cat.name}"></span>
+                    </a>
+                    <ul class="submenu" th:if="${#lists.size(cat.children) > 0}">
+                        <li th:each="sub : ${cat.children}">
+                            <a th:href="@{/category/{id}/item(id=${sub.categoryId})}">
+                                <span th:text="${sub.name}"></span>
+                                <span class="count" th:text="${#lists.size(sub.items)}"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <!--        &lt;!&ndash; Sản Phẩm Mới &ndash;&gt;-->
+        <!--        <a href="#">SẢN PHẨM MỚI</a>-->
+
+
+        <div class="dropdown">
+            <a href="#"> NAI VANG BEAUTY</a>
+        </div>
+
+        <!-- Deal hot -->
+        <!--        <a href="#">💖 DEAL HOT DƯỚI 100K 💖</a>-->
+
+        <!-- Tin tức -->
+        <div class="dropdown">
+            <a href="/blog">TIN TỨC</a>
+        </div>
+
+        <!-- Tra cứu đơn -->
+        <a href="#">TRA CỨU ĐƠN HÀNG</a>
+    </div>
+</div>
+
+<main class="wrapperMain_content">
+    <div class="inslideron">
+        <!-- viewport chỉ chứa slider -->
+        <div class="slider-viewport">
+            <div class="slider">
+                <div class="slide"><img th:src="@{/Example/Image/Banner1.png}" alt="Banner 1"></div>
+                <div class="slide"><img th:src="@{/Example/Image/Banner2.png}" alt="Banner 2"></div>
+                <div class="slide"><img th:src="@{/Example/Image/Banner3.png}" alt="Banner 3"></div>
+            </div>
+        </div>
+
+        <!-- Nút điều hướng tách riêng -->
+        <button class="nav prev" aria-label="Previous">&#10094;</button>
+        <button class="nav next" aria-label="Next">&#10095;</button>
+    </div>
+</main>
+
+<!-- FOOTER -->
+<div class="subscribe-bar">
+    <h2>ĐĂNG KÝ NHẬN ƯU ĐÃI</h2>
+    <form class="subscribe-form" id="subscribeForm">
+        <div class="input-wrap">
+            <input type="email" id="emailInput" placeholder="Nhập email của bạn">
+            <!-- dòng báo lỗi -->
+            <small id="emailError" class="error-msg"></small>
+        </div>
+        <button type="submit">ĐĂNG KÝ</button>
+    </form>
+</div>
+
+
+
+<footer class="footer">
+    <div class="footer-main">
+        <!-- Cột 1: Logo + thông tin -->
+        <div class="footer-col">
+            <img th:src="@{/Example/ImagTHƯe/Logo7.png}" alt="Nai Vang Logo" class="footer-logo">
+            <p><strong>CÔNG TY TNHH MTV ƠNG MẠI VÀ ĐẦU TƯ LIÊN Á CHÂU</strong></p>
+            <p>Giấy chứng nhận đăng ký doanh nghiệp số 0310618188, cấp ngày 29.01.2011, nơi cấp Sở Kế Hoạch và Đầu Tư TP. Hồ Chí Minh</p>
+            <p>Trụ sở chính: L2-VP-01, 346 Bến Vân Đồn, Phường Vĩnh Hội, TP. Hồ Chí Minh</p>
+            <p>Hotline: <a href="tel:19004449">19004449</a>
+                Điện thoại: <a href="tel:02838328272">02838328272</a></p>
+            <img th:src="@{/Example/Image/Bocongthuong_1_1.webp}" alt="Đã thông báo Bộ Công Thương" class="boct-logo">
+        </div>
+
+        <!-- Cột 2: Theo dõi + App + Thanh toán -->
+        <div class="footer-col">
+            <h4>Theo dõi chúng tôi</h4>
+            <div class="social-links">
+                <a href="#"><img th:src="@{/Example/Image/Facebook.webp}" alt="Facebook"></a>
+                <a href="#"><img th:src="@{/Example/Image/Instagram.webp}" alt="Instagram"></a>
+                <a href="#"><img th:src="@{/Example/Image/Youtube.webp}" alt="YouTube"></a>
+                <a href="#"><img th:src="@{/Example/Image/Tiktok.webp}" alt="TikTok"></a>
+            </div>
+
+            <h4>Tải App Ngay</h4>
+            <div class="app-links">
+                <img th:src="@{/Example/Image/Maqr.png}" alt="QR Code" class="qr-code">
+                <div>
+                    <a href="#"><img th:src="@{/Example/Image/Googleplay.webp}" alt="Google Play"></a>
+                    <a href="#"><img th:src="@{/Example/Image/Appstore.webp}" alt="App Store"></a>
+                </div>
+            </div>
+
+            <h4>Chấp nhận Phương thức thanh toán</h4>
+            <div class="pay-methods">
+                <img th:src="@{/Example/Image/Vnpay.webp}" alt="VNPay">
+                <img th:src="@{/Example/Image/Momo.webp}" alt="MoMo" class="momo-logo">
+                <img th:src="@{/Example/Image/Visa.webp}" alt="Visa">
+            </div>
+        </div>
+
+        <!-- Cột 3: Về chúng tôi -->
+        <div class="footer-col">
+            <h4>Về chúng tôi</h4>
+            <ul>
+                <li><a href="#">Giới thiệu</a></li>
+                <li><a href="#">Tin Tức</a></li>
+                <li><a href="#">Cẩm nang Làm đẹp</a></li>
+                <li><a href="#">Tuyển dụng</a></li>
+                <li><a href="#">Đổi điểm Hội Cam</a></li>
+                <li><a href="#">Liên hệ</a></li>
+                <li><a href="#">Địa chỉ cửa hàng</a></li>
+                <li><a href="#">Cho thuê mặt bằng</a></li>
+                <li><a href="#">Hợp tác cùng Guardian</a></li>
+            </ul>
+        </div>
+
+        <!-- Cột 4: Chính sách -->
+        <div class="footer-col">
+            <h4>Chính sách</h4>
+            <ul>
+                <li><a href="#">Chính sách và quy định chung</a></li>
+                <li><a href="#">Quy định và hình thức thanh toán</a></li>
+                <li><a href="#">Chính sách vận chuyển</a></li>
+                <li><a href="#">Chính sách đổi/trả hàng và hoàn tiền</a></li>
+                <li><a href="#">Chính sách bảo mật thông tin cá nhân</a></li>
+                <li><a href="#">Hướng dẫn mua hàng</a></li>
+                <li><a href="#">Quy trình xuất hóa đơn Điện Tử</a></li>
+                <li><a href="#">Chính sách Thông tin Hội Cam</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2025 Nai Vang. All rights reserved.</p>
+    </div>
+</footer>
+<script src="Example.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,431 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f5f5f5;
+}
+
+/* ================== ACCOUNT INFO ================== */
+.account-info {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.main-container {
+    display: flex;
+    margin: 30px auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Sidebar */
+.menu-sidebar {
+    flex: 0 0 340px;
+    border-right: 1px solid #eee;
+    padding: 20px;
+    background: #fafafa;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.menu-sidebar h3 {
+    margin-bottom: 15px;
+}
+
+.menu-sidebar ul {
+    list-style: none;
+    padding: 0;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu-sidebar ul li {
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.menu-sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 17px;
+    display: block;
+}
+
+.menu-sidebar ul li.active a {
+    color: #fff;
+    background: orange;
+    font-weight: bold;
+}
+
+.menu-sidebar ul li a:hover {
+    background: orange;
+    color: #fff;
+    transition: 0.3s ease;
+}
+
+/* Header + Footer */
+header {
+    background: #ff6600;
+    padding: 15px;
+    text-align: center;
+    color: #fff;
+}
+
+footer {
+    background: #ff6600;
+    padding: 15px;
+    color: #fff;
+    margin-top: 20px;
+}
+
+/* Profile */
+.profile-container {
+    width: 1000px;
+    margin-left: 40px;
+    padding: 20px;
+    font-size: 16px;
+}
+
+.account-info::-webkit-scrollbar {
+    display: none;
+}
+
+.account-info h2 {
+    margin-bottom: 0;
+    margin-left: 40px;
+    font-size: 25px;
+}
+
+.account-info label {
+    display: block;
+    font-weight: 500;
+    margin: 10px 0 5px;
+    color: #333;
+}
+
+.account-info input,
+.account-info select {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 10px;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.account-info input[disabled] {
+    background: #f5f5f5;
+    color: #ff9900;
+    cursor: not-allowed;
+}
+
+.account-info button.btn {
+    display: inline-block;
+    margin-top: 15px;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.account-info button.btn:hover {
+    background: #0056b3;
+}
+
+.gender-container {
+    display: flex;
+    gap: 20px;                    /* khoảng cách giữa Nam và Nữ */
+    align-items: center;          /* căn giữa dọc toàn bộ */
+    flex-wrap: nowrap;
+}
+
+.gender-container label {
+    display: flex;
+    align-items: center;          /* căn radio và text cùng hàng */
+    gap: 8px;                     /* khoảng cách giữa vòng tròn và chữ */
+    font-size: 15px;
+    color: #333;
+    cursor: pointer;
+}
+
+/* Radio tùy chỉnh màu cam */
+.gender-container input[type="radio"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ff8000;
+    border-radius: 50%;
+    position: relative;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+.gender-container input[type="radio"]:checked::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    background-color: #ff8000;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.address-row {
+    display: flex;
+    align-items: center;      /* ✅ canh giữa dọc tất cả thành phần */
+    justify-content: flex-start;
+    gap: 10px;
+    flex-wrap: nowrap;
+    margin-top: 10px;
+    padding: 4px 0;
+    border-radius: 6px;
+    transition: background 0.2s ease;
+}
+
+/* === FIX CĂN CHỈNH ĐỊA CHỈ === */
+#addressContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* khoảng cách đều giữa các hàng */
+}
+
+.address-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    flex-wrap: nowrap;
+    background-color: #fff;
+    border-radius: 6px;
+    padding: 4px 0;
+    min-height: 40px;  /* ✅ ép mọi dòng cùng chiều cao */
+}
+
+.address-label {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    width: 90px;
+    color: #333;
+    height: 36px;
+    line-height: 36px; /* ✅ căn chữ thẳng với input */
+    flex-shrink: 0;    /* ✅ không bị co khi input dài */
+}
+
+.address-input,
+.street-input {
+    flex: 1;
+    height: 36px;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
+}
+
+.street-input {
+    flex: 1.2;
+}
+
+
+.address-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-weight: 600;
+    width: 90px;              /* ✅ cố định rộng như dòng đầu */
+    color: #333;
+    height: 36px;             /* ✅ bằng chiều cao input */
+    line-height: 1;
+    margin-bottom: 0;
+}
+
+.address-input {
+    flex: 1;
+    padding: 8px 10px;
+    border: 1px solid #dddddd; /* ✅ Giống các input khác */
+    border-radius: 4px;
+    font-size: 14px;
+    color: #333;
+    height: 36px;
+    background-color: #fff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hiệu ứng focus đồng bộ */
+.address-input:focus {
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+}
+
+/* Ô street dài hơn nhẹ */
+.street-input {
+    flex: 1.2;
+}
+
+.btn-remove {
+    background-color: #ff4d4f;
+    border: none;
+    border-radius: 4px; /* ✅ cùng bán kính với input */
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.btn-remove::before {
+    content: "";
+    width: 12px;
+    height: 2.5px;
+    background: #fff;
+    border-radius: 1px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.btn-remove:hover {
+    background-color: #e60000;
+    transform: scale(1.05); /* hiệu ứng nhẹ khi hover */
+}
+
+/* Nút đặt mặc định */
+.btn-default {
+    background-color: #007bff;
+    color: #fff;
+    height: 36px;
+    border: none;
+    border-radius: 4px;
+    display: flex;
+    padding: 6px 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s ease;
+}
+
+.btn-default:hover {
+    background-color: #0056b3;
+}
+
+.btn-add {
+    background-color: #ff8000;   /* cam đậm, rực rõ hơn */
+    color: #fff;
+    border: none;
+    border-radius: 4px;          /* đồng bộ với input */
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-add:hover {
+    background-color: #cc6600;   /* cam cháy khi hover */
+}
+
+.btn-add:focus {
+    outline: none;
+}
+#updateBtn {
+    background-color: #333;    /* xám đậm khi chưa hover */
+    color: #fff;               /* chữ trắng */
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.25s ease;
+}
+
+#updateBtn:hover {
+    background-color: #000;    /* đen khi hover */
+}
+
+.btn-default-address {
+    background-color: #fff3e0;       /* nền cam rất nhạt */
+    color: #ff8000;                  /* chữ cam đậm */
+    border: 1px solid #ffb84d;       /* viền cam nhẹ */
+    border-radius: 4px;              /* đồng bộ với input và nút khác */
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: default;                 /* không nhấn được */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+}
+
+
+/* Input trong hàng địa chỉ không có margin-bottom để khỏi bị tụt */
+.address-row .address-input {
+    margin-bottom: 0;
+}
+
+/* Label Địa chỉ 1 căn đúng giữa theo chiều cao input */
+.address-label {
+    height: 36px;
+    line-height: 36px;
+}
+
+/* Căn đều kích thước và kiểu chữ cho 2 nút */
+.btn-default,
+.btn-default-address {
+    min-width: 150px;        /* ✅ cùng độ rộng */
+    height: 36px;
+    color: #fff;
+    background-color: #ff9800;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+/* Giữ màu riêng cho từng loại */
+.btn-default {
+    background-color: #ffe0b2;
+    color: #ff8000;
+    border: 1px solid #ffb84d;
+    transition: background 0.2s ease;
+}
+
+.btn-default:hover {
+    background-color: #e68900;
+    color: #fff;
+
+
+}
+
+.btn-default-address {
+    background-color: #fff3e0;
+    color: #ff8000;
+    border: 1px solid #ffb84d;
+    cursor: default;
+}
+
+

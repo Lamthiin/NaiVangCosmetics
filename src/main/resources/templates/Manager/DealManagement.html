@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Voucher - Manager</title>
+    <link rel="stylesheet" th:href="@{/Manager/DealManagement/DealManagement.css}">
+    <link rel="stylesheet" th:href="@{/Manager/Background/Background.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="icon" type="image/png" th:href="@{/Customer/Example/Image/LogoConNai.png}">
+</head>
+<body class="admin-body">
+<nav class="admin-sidebar">
+    <div class="sidebar-logo">
+        <img th:src="@{/Customer/Example/Image/LogoConNai.png}" alt="Logo" class="logo-img">
+        <h2 class="logo-text">Manager</h2>
+    </div>
+    <ul>
+        <li><a th:href="@{/manager/dashboard}"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
+        <li><a th:href="@{/manager/product-management}"><i class="fa-solid fa-box"></i> Sản phẩm</a></li>
+        <li><a th:href="@{/manager/category-management}"><i class="fa-solid fa-list"></i> Danh mục</a></li>
+        <li><a th:href="@{/manager/deal-management}" class="active"><i class="fa-solid fa-tags"></i> Voucher</a></li>
+        <li><a th:href="@{/manager/review-management}"><i class="fa-solid fa-star"></i> Đánh giá</a></li>
+        <li><a th:href="@{/manager/order-management}"><i class="fa-solid fa-receipt"></i> Đơn hàng</a></li>
+        <li><a th:href="@{/manager/profile}"><i class="fa-solid fa-user"></i> Hồ sơ</a></li>
+    </ul>
+</nav>
+<div class="admin-content">
+    <div class="top-bar">
+        <div class="user-menu">
+            <div class="user-info">
+                <i class="fa-solid fa-user-circle"></i>
+                <span>Manager</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <ul class="dropdown">
+                <li><a th:href="@{/manager/profile}"><i class="fa-solid fa-user"></i> Hồ sơ</a></li>
+                <li><a th:href="@{/customer/login}"><i class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-area">
+        <h2 class="deal-title">Quản lý Voucher</h2>
+        <div class="header-area">
+            <button class="add-btn" id="add-deal-btn">
+                <i class="fa-solid fa-plus"></i> Tạo voucher mới
+            </button>
+        </div>
+        <div class="table-container">
+            <table class="deal-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Mã voucher</th>
+                    <th>Mô tả</th>
+                    <th>Giảm (%)</th>
+                    <th>Lượt dùng tối đa</th>
+                    <th>Đã dùng</th>
+                    <th>Bắt đầu</th>
+                    <th>Kết thúc</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                </tr>
+                </thead>
+                <tbody id="deal-list">
+                </tbody>
+            </table>
+        </div>
+        <div class="modal" id="deal-modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2 id="modal-title">Tạo voucher mới</h2>
+                <form id="deal-form">
+                    <input type="hidden" id="voucher-id">
+                    <label for="code">Mã voucher: <span class="required">*</span></label>
+                    <input type="text" id="code" required placeholder="Ví dụ: SUMMER2025">
+                    <label for="description">Mô tả:</label>
+                    <textarea id="description" rows="3" placeholder="Mô tả chi tiết về voucher"></textarea>
+                    <label for="discount">Giảm giá (%): <span class="required">*</span></label>
+                    <input type="number" id="discount" min="0" max="100" required placeholder="0-100">
+                    <label for="maxUses">Số lượt sử dụng tối đa:</label>
+                    <input type="number" id="maxUses" min="0" placeholder="Để trống nếu không giới hạn">
+                    <label for="startDate">Ngày bắt đầu: <span class="required">*</span></label>
+                    <input type="datetime-local" id="startDate" required>
+                    <label for="endDate">Ngày kết thúc: <span class="required">*</span></label>
+                    <input type="datetime-local" id="endDate" required>
+                    <div class="checkbox-wrapper">
+                        <label for="isActive">
+                            <input type="checkbox" id="isActive" checked>
+                            Kích hoạt voucher
+                        </label>
+                    </div>
+                    <button type="submit" class="save-btn">
+                        <i class="fa-solid fa-save"></i> Lưu voucher
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/Manager/DealManagement/DealManagement.js}"></script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+:root {
+    --maxw: 1200px;
+    --accent: #ff914d;
+    --muted: #6b6b6b;
+    --bg: #fff8f8;
+    --card: #fff7f0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: #333;
+    font-family: inherit;
+    max-width: var(--maxw);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Container chính */
+.container {
+    padding: 20px 15px;
+}
+
+/* Tiêu đề bài viết */
+h1 {
+    font-size: 28px;
+    color: #a64b00;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+/* Metadata tác giả và ngày */
+.meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 25px;
+}
+
+.author-avatar {
+    width: 40px;
+    height: 40px;
+    background: #ff914d;
+    color: #fff;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+/* Table of content */
+.toc {
+    background: var(--card);
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+}
+
+.toc h3 {
+    margin-top: 0;
+    color: #a64b00;
+}
+
+.toc ul {
+    margin: 10px 0 0 15px;
+    padding: 0;
+}
+
+.toc li {
+    margin-bottom: 5px;
+}
+
+/* Article */
+article {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+article p {
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+article .note {
+    background: #fff3e6;
+    border-left: 4px solid var(--accent);
+    padding: 10px 15px;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+/* STEP sections */
+.step h2 {
+    color: #a64b00;
+    font-size: 18px;
+    margin-bottom: 8px;
+    margin-top: 20px;
+}
+
+.step p {
+    margin-bottom: 10px;
+}
+
+/* CTA và tags */
+.cta {
+    background: var(--accent);
+    color: #fff;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-top: 25px;
+    font-weight: 600;
+}
+
+.tags {
+    margin-top: 15px;
+    font-size: 13px;
+    color: var(--muted);
+}

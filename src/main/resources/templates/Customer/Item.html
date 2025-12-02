@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nai Vang Cosmetic</title>
+    <link rel="icon" type="image/png" th:src="@{/Customer/Item/Image/LogoConNai.png}">
+    <link rel="stylesheet" th:href="@{/Customer/Item/Item.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+</head>
+<body>
+    <div class="promo-banner">
+        <img th:src="@{/Customer/Item/Image/Example.gif}" alt="Promotion Nai Vang">
+    </div>
+
+    <div class="header">
+        <div class="container header-inner">
+        <a th:href="@{/}">
+            <img th:src="@{/Customer/Item/Image/Logo7.png}" alt="Logo" width="150" height="100">
+        </a>
+
+        <!-- Search -->
+        <div class="search-bar">
+            <div class="search-wrap">
+                <input type="text" placeholder="Bạn cần tìm ....">
+                <span class="search-icon">
+                    <svg viewBox="0 0 24 27" aria-hidden="true">
+                        <path d="M10,2C4.5,2,0,6.5,0,12s4.5,10,10,10s10-4.5,10-10S15.5,2,10,2z M10,19c-3.9,0-7-3.1-7-7s3.1-7,7-7s7,3.1,7,7S13.9,19,10,19z"></path>
+                        <rect x="17" y="17" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -9.2844 19.5856)" width="4" height="8"></rect>
+                    </svg>
+                </span>
+            </div>
+        </div>
+
+        <div class="header-icons">
+            <!-- User Section -->
+            <div class="user-section">
+                <button class="user-btn" aria-label="Tài khoản">
+                    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor"
+                              d="M17.75 14c1.24 0 2.25 1.01 2.25 2.25v.92c0 .57-.18 1.13-.52 1.6C18 20.9 15.5 22 12 22s-6-1.1-7.48-3.23c-.34-.47-.52-1.03-.52-1.6v-.92C4 15.01 5.01 14 6.25 14h11.5ZM12 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10Z"/>
+                    </svg>
+                </button>
+
+                <div class="user-dropdown">
+                    <a th:href="@{/login}" id="login-btn" sec:authorize="isAnonymous()">Đăng nhập</a>
+                    <a th:href="@{/sign-up}" id="subcribe-btn" sec:authorize="isAnonymous()">Đăng ký</a>
+                    <a th:href="@{/profile}" id="account-info" sec:authorize="isAuthenticated()">Thông tin tài khoản</a>
+                    <a th:href="@{/logout}" id="logout-btn" sec:authorize="isAuthenticated()">Đăng xuất</a>
+                </div>
+            </div>
+
+            <!-- Cart Section -->
+            <div class="cart-section">
+                <a href="#" class="cart-pill" title="Giỏ hàng">
+                    <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor"
+                              d="M7 4h-2l-1 2h2l3.6 7.59-1.35 2.44C7.89 16.37 8.29 17 8.94 17h9.56v-2H9.42l1.1-2h7.25c.75 0 1.41-.41 1.75-1.03L22 7H6.42l-.7-1h1.28L7 4Zm-1 16a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm12 0a2 2 0 1 0 .001-3.999A2 2 0 0 0 18 20Z"/>
+                    </svg>
+                    <span>Giỏ hàng</span>
+                </a>
+                </div>
+            </div>
+        </div>
+        </div>
+
+<!-- Menu -->
+<div class="menu-bar">
+    <div class="container menu-inner">
+
+        <div class="dropdown">
+            <a href="#">☰ DANH MỤC SẢN PHẨM</a>
+            <ul class="dropdown-content">
+                <li class="has-submenu" th:each="cat : ${rootCategories}">
+                    <a th:href="@{/category/{id}/item(id=${cat.categoryId})}">
+                        <img class="menu-icon"
+                             th:src="@{/Customer/Home/{icon}(icon=${cat.slug + '.png'})}"
+                             th:alt="${cat.name}" />
+                        <span th:text="${cat.name}"></span>
+                    </a>
+                    <ul class="submenu" th:if="${#lists.size(cat.children) > 0}">
+                        <li th:each="sub : ${cat.children}">
+                            <a th:href="@{/category/{id}/item(id=${sub.categoryId})}">
+                                <span th:text="${sub.name}"></span>
+                                <span class="count" th:text="${#lists.size(sub.items)}"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+
+        <div class="dropdown">
+            <a href="#"> NAI VANG BEAUTY</a>
+        </div>
+        <div class="dropdown">
+            <a href="/blog">TIN TỨC</a>
+        </div>
+
+       <a href="#">TRA CỨU ĐƠN HÀNG</a>
+    </div>
+</div>
+
+<nav class="breadcrumb">
+    <a th:href="@{/}">
+        <img th:src="@{/Customer/Item/Image/Home_icon.png}" alt="Home" class="breadcrumb-icon">
+        Trang chủ
+    </a>
+
+
+    <span th:if="${selectedRange != null}">
+        <span>&gt;</span>
+        <span class="current" th:switch="${selectedRange}">
+            <span th:case="'0-500'">0 - 500.000đ</span>
+            <span th:case="'500-1000'">500.000đ - 1.000.000đ</span>
+            <span th:case="'1000+'">Trên 1.000.000đ</span>
+        </span>
+    </span>
+</nav>
+
+
+<div class="banner">
+    <a href="#">
+        <img th:src="@{/Customer/Item/Image/Collection_banner.jpg}" alt="Web Sale Banner">
+    </a>
+</div>
+
+<section class="page-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="listmenu1link1"
+             th:each="cat : ${rootCategories}"
+             th:classappend="${currentCategory != null and currentCategory.parent != null and currentCategory.parent.categoryId == cat.categoryId} ? 'active'">
+            <a th:href="@{'/category/' + ${cat.categoryId} + '/item'}"
+               class="clickmenu2col"
+               th:classappend="${currentCategory != null and currentCategory.categoryId == cat.categoryId} ? ' highlight'">
+                <span th:text="${cat.name}"></span>
+                <span th:if="${#lists.size(cat.children) > 0}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="7" viewBox="0 0 10 7" fill="none">
+                <path d="M5 6.03561L0.5 1.69501L1.4661 0.77539L4.32627 3.53425L5 4.23564L5.67373 3.53425L8.5339 0.775391L9.5 1.69501L5 6.03561Z" fill="#131518"/>
+            </svg>
+        </span>
+            </a>
+            <ul th:if="${#lists.size(cat.children) > 0}">
+                <li th:each="sub : ${cat.children}"
+                    th:classappend="${currentCategory != null and currentCategory.categoryId == sub.categoryId} ? 'active-sub'">
+                    <a th:href="@{'/category/' + ${sub.categoryId} + '/item'}">
+                        <span th:text="${sub.name}"></span>
+                        <span class="count" th:text="${#lists.size(sub.items)}"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+
+        <!-- FILTER: Khoảng giá -->
+        <div class="listmenu1link1"
+             th:classappend="${selectedRange != null} ? 'active'">
+            <a href="#"
+               class="clickmenu2col"
+               th:classappend="${selectedRange != null} ? ' highlight'">
+                <span>Khoảng giá</span>
+                <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="7" viewBox="0 0 10 7" fill="none">
+                <path d="M5 6.03561L0.5 1.69501L1.4661 0.77539L4.32627 3.53425L5 4.23564L5.67373 3.53425L8.5339 0.775391L9.5 1.69501L5 6.03561Z" fill="#131518"/>
+            </svg>
+        </span>
+            </a>
+
+            <ul>
+                <li th:classappend="${selectedRange == '0-500'} ? 'active-sub'">
+                    <a th:href="@{|/item/filter?categoryId=${category.categoryId}&range=0-500|}">
+                        <span>0 - 500.000đ</span>
+                    </a>
+                </li>
+
+                <li th:classappend="${selectedRange == '500-1000'} ? 'active-sub'">
+                    <a th:href="@{|/item/filter?categoryId=${category.categoryId}&range=500-1000|}">
+                        <span>500.000đ - 1.000.000đ</span>
+                    </a>
+                </li>
+
+                <li th:classappend="${selectedRange == '1000+'} ? 'active-sub'">
+                    <a th:href="@{|/item/filter?categoryId=${category.categoryId}&range=1000%2B|}">
+                        <span>Trên 1.000.000đ</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </aside>
+
+    <!-- Nội dung -->
+    <div class="content-area">
+        <div class="hot-deal">
+            <h2 class="hot-deal-title">ƯU ĐÃI HOT HÔM NAY</h2>
+            <div class="hot-deal-list">
+                <div class="hot-deal-item">
+                    <img th:src="@{/Customer/Item/Image/Taytrangsale.png}" alt="Tẩy trang">
+                </div>
+                <div class="hot-deal-item">
+                    <img th:src="@{/Customer/Item/Image/Serumsale.png}" alt="Serum">
+                </div>
+                <div class="hot-deal-item">
+                    <img th:src="@{/Customer/Item/Image/Srmsale.png}" alt="Sữa rửa mặt">
+                </div>
+            </div>
+        </div>
+
+        <main class="product-page">
+            <section class="product-list">
+                <div class="sort-bar">
+                    <button class="active">Bán chạy</button>
+                    <button>Mới nhất</button>
+                </div>
+
+                <div class="grid">
+                    <div class="product-card" th:each="item : ${items}">
+                        <a th:href="@{/item/{id}(id=${item.itemId})}" class="product-link">
+                            <img th:src="@{'/api/item-images/by-item/' + ${item.itemId} + '/primary'}"
+                                 th:alt="${item.name}" width="200" height="200"/>
+                            <div class="brand">COCOON</div>
+                            <h4 class="title" th:text="${item.name}"></h4>
+                        </a>
+
+                        <div class="price">
+                            <span class="new" th:text="${item.price} + ' đ'"></span>
+                            <span class="old">95.000đ</span>
+                            <span class="discount">-20%</span>
+                        </div>
+
+                        <div class="rating">
+                            <span th:utext="${item.ratingStars}"></span>
+                            <span th:text="'(' + ${#numbers.formatDecimal(item.averageRating, 1, 1)} + '/5 - ' + ${item.reviewCount} + ' lượt đánh giá)'"></span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </section>
+        </main>
+    </div>
+</section>
+
+<!-- Subscribe -->
+<div class="subscribe-bar">
+    <h2>ĐĂNG KÝ NHẬN ƯU ĐÃI</h2>
+    <form class="subscribe-form" id="subscribeForm">
+        <div class="input-wrap">
+            <input type="email" id="emailInput" placeholder="Nhập email của bạn">
+            <small id="emailError" class="error-msg"></small>
+        </div>
+        <button type="submit">ĐĂNG KÝ</button>
+    </form>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-main">
+        <div class="footer-col">
+            <img th:src="@{/Customer/Item/Image/Logo7.png}" alt="Nai Vang Logo" class="footer-logo">
+            <p><strong>CÔNG TY TNHH MTV THƯƠNG MẠI VÀ ĐẦU TƯ LIÊN Á CHÂU</strong></p>
+            <p>Giấy chứng nhận đăng ký doanh nghiệp số 0310618188, cấp ngày 29.01.2011, nơi cấp Sở Kế Hoạch và Đầu Tư TP. Hồ Chí Minh</p>
+            <p>Trụ sở chính: L2-VP-01, 346 Bến Vân Đồn, Phường Vĩnh Hội, TP. Hồ Chí Minh</p>
+            <p>Hotline: <a href="tel:19004449">19004449</a> Điện thoại: <a href="tel:02838328272">02838328272</a></p>
+            <img th:src="@{/Customer/Item/Image/Bocongthuong_1_1.webp}" alt="Đã thông báo Bộ Công Thương" class="boct-logo">
+        </div>
+
+        <div class="footer-col">
+            <h4>Theo dõi chúng tôi</h4>
+            <div class="social-links">
+                <a href="#"><img th:src="@{/Customer/Item/Image/Facebook.webp}" alt="Facebook"></a>
+                <a href="#"><img th:src="@{/Customer/Item/Image/Instagram.webp}" alt="Instagram"></a>
+                <a href="#"><img th:src="@{/Customer/Item/Image/Youtube.webp}" alt="YouTube"></a>
+                <a href="#"><img th:src="@{/Customer/Item/Image/Tiktok.webp}" alt="TikTok"></a>
+            </div>
+
+            <h4>Tải App Ngay</h4>
+            <div class="app-links">
+                <img th:src="@{/Customer/Item/Image/Maqr.png}" alt="QR Code" class="qr-code">
+                <div>
+                    <a href="#"><img th:src="@{/Customer/Item/Image/Googleplay.webp}" alt="Google Play"></a>
+                    <a href="#"><img th:src="@{/Customer/Item/Image/Appstore.webp}" alt="App Store"></a>
+                </div>
+            </div>
+
+            <h4>Chấp nhận Phương thức thanh toán</h4>
+            <div class="pay-methods">
+                <img th:src="@{/Customer/Item/Image/Vnpay.png}" alt="VNPay">
+                <img th:src="@{/Customer/Item/Image/Momo.webp}" alt="MoMo" class="momo-logo">
+                <img th:src="@{/Customer/Item/Image/Visa.png}" alt="Visa">
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <h4>Về chúng tôi</h4>
+            <ul>
+                <li><a href="#">Giới thiệu</a></li>
+                <li><a href="#">Tin Tức</a></li>
+                <li><a href="#">Cẩm nang Làm đẹp</a></li>
+                <li><a href="#">Tuyển dụng</a></li>
+                <li><a href="#">Đổi điểm Hội Cam</a></li>
+                <li><a href="#">Liên hệ</a></li>
+                <li><a href="#">Địa chỉ cửa hàng</a></li>
+                <li><a href="#">Cho thuê mặt bằng</a></li>
+                <li><a href="#">Hợp tác cùng Guardian</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Chính sách</h4>
+            <ul>
+                <li><a href="#">Chính sách và quy định chung</a></li>
+                <li><a href="#">Quy định và hình thức thanh toán</a></li>
+                <li><a href="#">Chính sách vận chuyển</a></li>
+                <li><a href="#">Chính sách đổi/trả hàng và hoàn tiền</a></li>
+                <li><a href="#">Chính sách bảo mật thông tin cá nhân</a></li>
+                <li><a href="#">Hướng dẫn mua hàng</a></li>
+                <li><a href="#">Quy trình xuất hóa đơn Điện Tử</a></li>
+                <li><a href="#">Chính sách Thông tin Hội Cam</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2025 Nai Vang. All rights reserved.</p>
+    </div>
+</footer>
+
+<script th:src="@{/Customer/Item/Item.js}"></script>
+</body>
+</html>

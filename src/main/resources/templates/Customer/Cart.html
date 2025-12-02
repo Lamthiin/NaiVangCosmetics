@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ hàng</title>
+    <link rel="icon" type="image/png" th:href="@{/Customer/Home/LogoConNai.png}">
+    <link rel="stylesheet" th:href="@{/Customer/Home/Home.css}">
+    <link rel="stylesheet" th:href="@{/Customer/Cart/Cart.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+</head>
+<body>
+
+<div class="promo-banner">
+    <img th:src="@{/Customer/Home/Home.gif}" alt="Khuyến mãi Lam Thao">
+</div>
+
+<div class="header">
+    <div class="container header-inner">
+        <a th:href="@{/}">
+            <img th:src="@{/Customer/Example/Image/Logo7.png}" alt="Logo" width="150" height="100">
+        </a>
+
+        <div class="search-bar">
+            <div class="search-wrap">
+                <input type="text" placeholder="Bạn cần tìm ....">
+                <span class="search-icon">
+                    <svg viewBox="0 0 24 27" aria-hidden="true">
+                        <path d="M10,2C4.5,2,0,6.5,0,12s4.5,10,10,10s10-4.5,10-10S15.5,2,10,2z M10,19c-3.9,0-7-3.1-7-7s3.1-7,7-7s7,3.1,7,7S13.9,19,10,19z"></path>
+                        <rect x="17" y="17" transform="matrix(0.7071 -0.7071 0.7071 0.7071 -9.2844 19.5856)" width="4" height="8"></rect>
+                    </svg>
+                </span>
+            </div>
+        </div>
+
+        <div class="header-icons">
+            <div class="user-section">
+                <button class="user-btn" aria-label="Tài khoản">
+                    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor"
+                              d="M17.75 14c1.24 0 2.25 1.01 2.25 2.25v.92c0 .57-.18 1.13-.52 1.6C18 20.9 15.5 22 12 22s-6-1.1-7.48-3.23c-.34-.47-.52-1.03-.52-1.6v-.92C4 15.01 5.01 14 6.25 14h11.5ZM12 2a5 5 0 1 1 0 10 5 5 0 0 1 0-10Z"/>
+                    </svg>
+                </button>
+
+                <div class="user-dropdown">
+                    <a th:href="@{/login}" id="login-btn" sec:authorize="isAnonymous()">Đăng nhập</a>
+                    <a th:href="@{/sign-up}" id="subcribe-btn" sec:authorize="isAnonymous()">Đăng ký</a>
+
+                    <a th:href="@{/profile}" id="account-info" sec:authorize="isAuthenticated()">Thông tin tài khoản</a>
+                    <a th:href="@{/logout}" id="logout-btn" sec:authorize="isAuthenticated()">Đăng xuất</a>
+                </div>
+            </div>
+
+            <div class="cart-section">
+                <a href="#" class="cart-pill" title="Giỏ hàng">
+                    <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fill="currentColor"
+                              d="M7 4h-2l-1 2h2l3.6 7.59-1.35 2.44C7.89 16.37 8.29 17 8.94 17h9.56v-2H9.42l1.1-2h7.25c.75 0 1.41-.41 1.75-1.03L22 7H6.42l-.7-1h1.28L7 4Zm-1 16a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm12 0a2 2 0 1 0 .001-3.999A2 2 0 0 0 18 20Z"/>
+                    </svg>
+                    <span>Giỏ hàng</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== MAIN ===================== -->
+<main class="cart-container">
+    <section class="cart-items">
+        <h2>
+            Giỏ hàng (<span th:text="${#lists.size(cartItems)}">0</span> sản phẩm)
+        </h2>
+        <table class="cart-table">
+            <thead>
+            <tr>
+                <th>Sản phẩm</th>
+                <th>Giá tiền</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+                <th></th>
+            </tr>
+            </thead>
+
+            <!-- Nếu có sản phẩm -->
+            <tbody id="cart-body" th:if="${#lists.isEmpty(cartItems) == false}">
+            <tr th:each="item : ${cartItems}">
+                <td class="product-info">
+                    <img th:if="${item.item.images != null and !item.item.images.isEmpty()}"
+                         th:src="@{'/api/item-images/blob/' + ${item.item.images[0].itemImageId}}"
+                         th:alt="${item.item.images[0].alt ?: 'Sản phẩm'}" />
+                    <span th:if="${item.item.images == null or item.item.images.isEmpty()}">
+                        [Không có hình]
+                    </span>
+                    <div class="product-text">
+                        <span class="product-name" th:text="${item.item.name}">Tên sản phẩm</span>
+                        <span class="product-desc" th:text="${item.item.description}">Mô tả sản phẩm</span>
+                    </div>
+                </td>
+                <td>
+                    <span class="price-sale"
+                          th:text="|${#numbers.formatInteger(item.item.price, 0, 'POINT')}₫|">0₫</span>
+                </td>
+                <td>
+                    <input type="number" th:value="${item.quantity}" min="1" class="quantity" />
+                </td>
+                <td class="subtotal"
+                    th:text="|${#numbers.formatInteger(item.item.price * item.quantity, 0, 'POINT')}₫|">0₫</td>
+                <td>
+                    <button class="remove-btn" th:attr="data-id=${item.item.itemId}">✖</button>
+                </td>
+            </tr>
+            </tbody>
+
+            <!-- Nếu giỏ hàng trống -->
+            <tbody th:if="${#lists.isEmpty(cartItems)}">
+            <tr>
+                <td colspan="5" style="text-align:center; padding:20px;">
+                    Giỏ hàng của bạn đang trống.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/}" class="back-shopping">← Tiếp tục mua hàng</a>
+    </section>
+
+    <!-- ========== Hóa đơn ========== -->
+    <aside class="cart-summary">
+        <h2>Hóa đơn của bạn</h2>
+        <p>Tạm tính:
+            <span id="summary-subtotal"
+                  th:text="|${#numbers.formatInteger(#aggregates.sum(cartItems.![item.price * quantity]), 0, 'POINT')}₫|">
+            </span>
+        </p>
+        <p>Giảm giá: <span id="summary-discount">0₫</span></p>
+        <hr />
+        <p>
+            Tổng cộng:
+            <span id="summary-total"
+                  th:text="|${#numbers.formatInteger(#aggregates.sum(cartItems.![item.price * quantity]), 0, 'POINT')}₫|">
+            </span>
+        </p>
+        <p class="vat">(Đã bao gồm VAT)</p>
+        <form th:action="@{/cart/payment}" method="get">
+            <button type="submit" id="checkout-btn">Tiến hành đặt hàng</button>
+        </form>
+    </aside>
+</main>
+
+<!-- ========== FOOTER ========== -->
+<div class="subscribe-bar">
+    <h2>ĐĂNG KÝ NHẬN ƯU ĐÃI</h2>
+    <form class="subscribe-form" id="subscribeForm">
+        <div class="input-wrap">
+            <input type="email" id="emailInput" placeholder="Nhập email của bạn">
+            <small id="emailError" class="error-msg"></small>
+        </div>
+        <button type="submit">ĐĂNG KÝ</button>
+    </form>
+</div>
+
+<footer class="footer">
+    <div class="footer-main">
+        <div class="footer-col">
+            <img th:src="@{/Customer/Home/Logo7.png}" alt="Nai Vang Logo" class="footer-logo">
+            <p><strong>CÔNG TY TNHH MTV THƯƠNG MẠI VÀ ĐẦU TƯ LIÊN Á CHÂU</strong></p>
+            <p>Giấy chứng nhận đăng ký doanh nghiệp số 0310618188, cấp ngày 29.01.2011.</p>
+            <p>Trụ sở chính: L2-VP-01, 346 Bến Vân Đồn, Quận 4, TP. Hồ Chí Minh</p>
+            <p>Hotline: <a href="tel:19004449">19004449</a></p>
+            <img th:src="@{/Customer/Home/Bocongthuong_1_1.webp}" alt="Đã thông báo Bộ Công Thương" class="boct-logo">
+        </div>
+
+        <div class="footer-col">
+            <h4>Theo dõi chúng tôi</h4>
+            <div class="social-links">
+                <a href="#"><img th:src="@{/Customer/Home/Facebook.webp}" alt="Facebook"></a>
+                <a href="#"><img th:src="@{/Customer/Home/Instagram.webp}" alt="Instagram"></a>
+                <a href="#"><img th:src="@{/Customer/Home/Youtube.webp}" alt="YouTube"></a>
+                <a href="#"><img th:src="@{/Customer/Home/Tiktok.webp}" alt="TikTok"></a>
+            </div>
+            <h4>Chấp nhận thanh toán</h4>
+            <div class="pay-methods">
+                <img th:src="@{/Customer/Home/Vnpay.png}" alt="VNPay">
+                <img th:src="@{/Customer/Home/Momo.webp}" alt="MoMo" class="momo-logo">
+                <img th:src="@{/Customer/Home/Visa.png}" alt="Visa">
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2025 Nai Vang. All rights reserved.</p>
+    </div>
+</footer>
+
+<script th:src="@{/Customer/Home/Home.js}"></script>
+<script th:src="@{/Customer/Cart/Cart.js}"></script>
+</body>
+</html>
