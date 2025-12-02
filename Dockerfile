@@ -1,15 +1,14 @@
-# Giai đoạn 1: Build (Dùng Maven có sẵn của Docker để tránh lỗi quyền hạn)
+# Giai đoạn 1: Build
 FROM maven:3.9-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY . .
-# Lệnh quan trọng: -DfinalName=app sẽ ép tên file đầu ra thành "app.jar"
-# Chúng ta dùng lệnh 'mvn' thay vì './mvnw' để tránh lỗi permission từ Windows
-RUN mvn clean package -DskipTests -DfinalName=app
+# Chạy lệnh build mặc định (sẽ tạo ra file tên gốc: NaiVangCosmetics-0.0.1-SNAPSHOT.jar)
+RUN mvn clean package -DskipTests
 
 # Giai đoạn 2: Run
 FROM eclipse-temurin:17-jdk-alpine
 WORKDIR /app
-# Copy file app.jar (đã được định danh ở trên) vào
-COPY --from=build /app/target/app.jar app.jar
+# COPY chính xác tên file được tạo ra từ pom.xml của bạn
+COPY --from=build /app/target/NaiVangCosmetics-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","app.jar"]
